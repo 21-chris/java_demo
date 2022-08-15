@@ -1,0 +1,20 @@
+server:
+  port: 8020
+spring:
+  mvc:
+    servlet:
+      load-on-startup: 1
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/gjl?serverTimezone=UTC&amp&useUnicode=true&useSSL=false&characterEncoding=utf8
+    username: root
+    password: 135974asd
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password: 123456
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: false
+
