@@ -9,5 +9,5 @@ import java.util.ArrayList;
 public class OfferingDto {
     private String offeringName;
     private String sceneType;
-//    ArrayList<Attribute> attributeList;
+    ArrayList<Attribute> attributeList;
 }

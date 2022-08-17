@@ -14,5 +14,5 @@ public class Attribute {
     private int id;
     private String attributeValue;
     private String attributeType;
-    private String offeringId;
+    private int offeringId;
 }
