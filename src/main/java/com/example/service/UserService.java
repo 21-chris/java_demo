@@ -12,8 +12,7 @@ public interface UserService {
 
     int insertUser(User user);
     int updateUser(User user);
-
-    Result loginUser(HttpServletRequest request, User user);
+    Result loginUser(User user);
 
 }
 

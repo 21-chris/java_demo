@@ -31,31 +31,23 @@ public class OfferingController {
     private OfferingService offeringService;
 
     @PostMapping("/add")
-    public int insertUser(HttpServletRequest request, @RequestBody OfferingDto offeringDto){
-//        入参数转为数据库表中的
-        //        插入商品表
+    public int insertOffering(HttpServletRequest request, @RequestBody OfferingDto offeringDto){
+//        入参数转为数据库商品表中的
         Offering offering = OfferingConvert.Instance.abc(offeringDto);
         offering.setUserId("3");
         offeringService.insertOffering(offering);
-        System.out.println();
-
 //        使用mapstruct after解析出属性列表
         List<Attribute> attriubteList = OfferingConvert.Instance.dtoAfter(offeringDto);
 //        插入商品属性
-//        ArrayList arrayList=  offeringDto.getAttributeList();
-//        for (int i = 0; i < arrayList.size(); i++) {
-//            Attribute dfd = (Attribute) arrayList.get(i);
-//            attributeService.insertAttribute(dfd);
-//        }
         for (int i = 0; i < attriubteList.size(); i++) {
             Attribute attribute = attriubteList.get(i);
             attribute.setOfferingId(offering.getId());
             attributeService.insertAttribute(attribute);
         }
-//        Object userId = request.getSession().getAttribute("user");
-//        User user = userMapper.selectById(userId.toString());
-
-
+        return 1;
+    }
+    @PostMapping("/addList")
+    public int ListOffering(){
         return 1;
     }
 }

@@ -23,13 +23,18 @@ public class UserController {
         return userService.insertUser(user);
     }
 
+    @GetMapping("hello")
+    public String Hello(){
+        return "heoop";
+    }
     @PostMapping("/update")
     public int insert(@RequestBody User user){
         return userService.updateUser(user);
     }
 
     @PostMapping("/login")
-    public Result login(HttpServletRequest request, @RequestBody User user){
-        return userService.loginUser(request, user);
+    public Result login(@RequestBody User user){
+        return userService.loginUser(user);
     }
+
 }
