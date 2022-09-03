@@ -86,12 +86,14 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configurers.ExceptionHandlingConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -99,12 +101,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
+
     @Autowired
     public JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
-//    @Autowired
-//    private AuthenticationEntryPoint authenticationEntryPoint;
-//    @Autowired
-//    private AccessDeniedHandler accessDeniedHandler;
+
+    @Autowired
+    private AuthenticationEntryPoint authenticationEntryPoint;
+    @Autowired
+    private AccessDeniedHandler accessDeniedHandler;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -119,13 +124,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // 除上面外的所有请求全部需要鉴权认证
         .anyRequest().authenticated();
         //允许跨域
-//        http.cors();
-//    http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
 //        //配置异常处理器
-//        http.exceptionHandling()
+        ExceptionHandlingConfigurer<HttpSecurity> httpSecurityExceptionHandlingConfigurer = http.exceptionHandling()
 //                //配置认证失败处理器
-//                .authenticationEntryPoint(authenticationEntryPoint)
-//                .accessDeniedHandler(accessDeniedHandler);
+                .authenticationEntryPoint(authenticationEntryPoint)
+                .accessDeniedHandler(accessDeniedHandler);
+        //允许跨域
+        http.cors();
     }
 
     @Bean

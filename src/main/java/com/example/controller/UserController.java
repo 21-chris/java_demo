@@ -22,10 +22,10 @@ public class UserController {
     public int insertUser(@RequestBody User user){
         return userService.insertUser(user);
     }
+//    @PreAuthorize("admin")
 
-    @GetMapping("/hello")
-//    @PreAuthorize("hasAuthority('test')")
-    @PreAuthorize("admin")
+    @RequestMapping("/hello")
+    @PreAuthorize("hasAuthority('test')")
     public String Hello(){
         System.out.println("he;l");
         return "heoop";

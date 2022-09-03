@@ -19,7 +19,6 @@ import java.util.Objects;
 
 @Component
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
-
 //    @Autowired
 //    private RedisTemplate<String, Object> redisTemplate;
     @Autowired
@@ -27,19 +26,13 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        System.out.println("request"+request);
         //获取token
         String token = request.getHeader("token");
-        System.out.println("token"+token);
-
         if (!StringUtils.hasText(token)) {
             //放行
             filterChain.doFilter(request, response);
-            System.out.println("23");
-
             return;
         }
-        System.out.println("33");
 
         //解析token
         String userid;
@@ -54,8 +47,8 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         String redisKey = "login:" + userid;
 
 //        LoginUser loginUser = redisCache.getCacheObject(redisKey);
-        LoginUser loginUser = (LoginUser) redisTemplate.opsForValue().get(redisKey);        System.out.println(loginUser);
-        System.out.println("hello"+loginUser);
+        LoginUser loginUser = (LoginUser) redisTemplate.opsForValue().get(redisKey);
+        System.out.println("1-----hello"+loginUser);
 
         if(Objects.isNull(loginUser)){
             throw new RuntimeException("用户未登录");
@@ -63,11 +56,13 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         //存入SecurityContextHolder
         //TODO 获取权限信息封装到Authentication中
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(loginUser,null,null);
+                new UsernamePasswordAuthenticationToken(loginUser,null,loginUser.getAuthorities());
+
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+
+
         //放行
         System.out.println("放行");
-
         filterChain.doFilter(request, response);
         System.out.println("放行3");
 
