@@ -20,20 +20,27 @@ import java.util.Objects;
 @Component
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
+//    @Autowired
+//    private RedisTemplate<String, Object> redisTemplate;
     @Autowired
-    private RedisTemplate<String, Object> redisTemplate;
-    @Autowired
-    private RedisCache redisCache;
+    private RedisTemplate<Object,Object> redisTemplate;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        System.out.println("request"+request);
         //获取token
         String token = request.getHeader("token");
+        System.out.println("token"+token);
+
         if (!StringUtils.hasText(token)) {
             //放行
             filterChain.doFilter(request, response);
+            System.out.println("23");
+
             return;
         }
+        System.out.println("33");
+
         //解析token
         String userid;
         try {
@@ -46,7 +53,10 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         //从redis中获取用户信息
         String redisKey = "login:" + userid;
 
-        LoginUser loginUser = redisCache.getCacheObject(redisKey);
+//        LoginUser loginUser = redisCache.getCacheObject(redisKey);
+        LoginUser loginUser = (LoginUser) redisTemplate.opsForValue().get(redisKey);        System.out.println(loginUser);
+        System.out.println("hello"+loginUser);
+
         if(Objects.isNull(loginUser)){
             throw new RuntimeException("用户未登录");
         }
@@ -56,6 +66,10 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
                 new UsernamePasswordAuthenticationToken(loginUser,null,null);
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         //放行
+        System.out.println("放行");
+
         filterChain.doFilter(request, response);
+        System.out.println("放行3");
+
     }
 }

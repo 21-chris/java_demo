@@ -4,6 +4,7 @@ import com.example.common.Result;
 import com.example.pojo.User;
 import com.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,7 +24,8 @@ public class UserController {
         return userService.insertUser(user);
     }
 
-    @GetMapping("hello")
+    @GetMapping("/hello")
+    @PreAuthorize("hasAuthority('test')")
     public String Hello(){
         return "heoop";
     }

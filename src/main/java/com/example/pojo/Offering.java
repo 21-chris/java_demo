@@ -9,7 +9,8 @@ import org.springframework.context.annotation.ComponentScan;
 
 import javax.persistence.Id;
 
-
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
 public class Offering {
     @Id

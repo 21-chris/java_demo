@@ -7,9 +7,13 @@ import com.example.config.JwtUtil;
 import com.example.mapper.UserMapper;
 import com.example.pojo.User;
 import com.example.service.UserService;
-import io.lettuce.core.support.caching.RedisCache;
+//import com.example.utils.RedisCache;
 import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -25,13 +29,14 @@ import java.util.Objects;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
+//    @Autowired
+//    private RedisCache redisCache;
 
     @Autowired
-    private RedisTemplate<String, Object> redisTemplate;
+    public RedisTemplate<Object,Object> redisTemplate;
+
     @Autowired
     private AuthenticationManager authenticationManager;
-    @Autowired
-    private RedisCache redisCache;
 
     @Override
     public User findUserById(int id) {
@@ -69,12 +74,16 @@ public class UserServiceImpl implements UserService {
         LoginUser loginUser = (LoginUser) authenticate.getPrincipal();
         String userId = loginUser.getUser().getId().toString();
         String jwt = JwtUtil.createJWT(userId);
-        //authenticate存入redis
-        redisCache.setCacheObject("login:"+userId,loginUser);
+//        authenticate存入redis
+        System.out.println("loginUser"+loginUser);
+        redisTemplate.opsForValue().set("login:"+userId, loginUser);
+        System.out.println("ffff"+ redisTemplate.opsForValue().get("login:"+userId));
+//        System.out.println(redisTemplate.opsForValue().get("login:"+userId));
+//        redisCache.setCacheObject("login:"+userId,loginUser);
         //把token响应给前端
         HashMap<String,String> map = new HashMap<>();
         map.put("token",jwt);
-        Result result1 = new Result("200","true",loginUser);
+        Result result1 = new Result("200","true",map);
         return result1;
     }
 

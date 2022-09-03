@@ -7,14 +7,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.Id;
 
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
 public class User {
 //    @TableId(value = "id",type = IdType.AUTO)
-    @Id
-    @TableId(value = "id",type = IdType.AUTO)
-    private Integer id;
+    @TableId
+    private Long id;
     private String name;
     private String password;
+
 }

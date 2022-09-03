@@ -36,16 +36,6 @@ public class JwtUtil {
         return builder.compact();
     }
 
-    /**
-     * 生成jtw
-     * @param subject token中要存放的数据（json格式）
-     * @param ttlMillis token超时时间
-     * @return
-     */
-    public static String createJWT(String subject, Long ttlMillis) {
-        JwtBuilder builder = getJwtBuilder(subject, ttlMillis, getUUID());// 设置过期时间
-        return builder.compact();
-    }
 
     private static JwtBuilder getJwtBuilder(String subject, Long ttlMillis, String uuid) {
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
@@ -67,6 +57,16 @@ public class JwtUtil {
     }
 
     /**
+     * 生成jtw
+     * @param subject token中要存放的数据（json格式）
+     * @param ttlMillis token超时时间
+     * @return
+     */
+    public static String createJWT(String subject, Long ttlMillis) {
+        JwtBuilder builder = getJwtBuilder(subject, ttlMillis, getUUID());// 设置过期时间
+        return builder.compact();
+    }
+    /**
      * 创建token
      * @param id
      * @param subject
@@ -80,7 +80,7 @@ public class JwtUtil {
 
     public static void main(String[] args) throws Exception {
 //        String jwt = createJWT("2123");
-        Claims claims = parseJWT("eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIyOTY2ZGE3NGYyZGM0ZDAxOGU1OWYwNjBkYmZkMjZhMSIsInN1YiI6IjIiLCJpc3MiOiJzZyIsImlhdCI6MTYzOTk2MjU1MCwiZXhwIjoxNjM5OTY2MTUwfQ.NluqZnyJ0gHz-2wBIari2r3XpPp06UMn4JS2sWHILs0");
+        Claims claims = parseJWT("eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIzZmYzODA2YWMxOGE0MDFlOGQ5MzAzNTBiODU4YWQzOCIsInN1YiI6IjIxIiwiaXNzIjoic2ciLCJpYXQiOjE2NjExNTg1NjAsImV4cCI6MTY2MTE2MjE2MH0.KWCFKXki9zRdEExZC7GHWW-ON2NNpQnWIbD4Ms1_XWw");
         String subject = claims.getSubject();
         System.out.println(subject);
 //        System.out.println(claims);
