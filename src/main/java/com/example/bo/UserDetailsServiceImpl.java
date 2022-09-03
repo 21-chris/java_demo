@@ -28,13 +28,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user = userMapper.selectOne(wrapper);
         //如果查询不到数据就通过抛出异常来给出提示
         if(Objects.isNull(user)){
-            System.out.println("nouser");
             throw new UsernameNotFoundException("用户不存在");
         }
         //TODO 根据用户查询权限信息 添加到LoginUser中
         List<String> permissionKeyList = menuMapper.selectPermsByUserId(user.getId());
         //封装成UserDetails对象返回
-        System.out.println();
         return new LoginUser(user,permissionKeyList);
     }
 }

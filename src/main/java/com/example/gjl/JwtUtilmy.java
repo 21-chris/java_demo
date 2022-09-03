@@ -1,4 +1,4 @@
-package com.example.config;
+package com.example.gjl;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTCreator;
@@ -9,9 +9,9 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import java.util.Calendar;
 import java.util.Map;
 
-public class JwtUtilmy
-{
+public class JwtUtilmy {
     private static final String SING = "Qdfdfdg%#@*$^*";
+//    使用加密获得一个信息token
     public  static String getToken(Map<String,String> map){
         Calendar instance = Calendar.getInstance();
 //        创建jwt工具类

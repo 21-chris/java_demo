@@ -1,4 +1,4 @@
-package com.example.common;
+package com.example.gjl;
 
 public class printBar implements Runnable {
     @Override

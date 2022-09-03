@@ -6,7 +6,6 @@ import com.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/user")
@@ -25,8 +24,10 @@ public class UserController {
     }
 
     @GetMapping("/hello")
-    @PreAuthorize("hasAuthority('test')")
+//    @PreAuthorize("hasAuthority('test')")
+    @PreAuthorize("admin")
     public String Hello(){
+        System.out.println("he;l");
         return "heoop";
     }
     @PostMapping("/update")

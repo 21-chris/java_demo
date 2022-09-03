@@ -1,4 +1,4 @@
-package com.example.common;
+package com.example.gjl;
 
 class FooBar {
     private int n;

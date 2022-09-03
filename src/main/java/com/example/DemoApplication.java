@@ -15,10 +15,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 @MapperScan({"com.example.mapper","com.example.pojo"})
 public class DemoApplication {
     public static void main(String[] args) {
-
         ConfigurableApplicationContext run = SpringApplication.run(DemoApplication.class, args);
-        System.out.println("dfdd");
-
     }
 
 }

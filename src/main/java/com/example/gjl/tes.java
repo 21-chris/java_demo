@@ -1,4 +1,4 @@
-package com.example.common;
+package com.example.gjl;
 
 import java.util.HashMap;
 
@@ -7,9 +7,9 @@ public class tes {
 
 //        printBar printBar = new printBar();
 //        printFoo printFoo = new printFoo();
-        FooBar fooBar = new FooBar(2);
+//        FooBar fooBar = new FooBar(2);
 //        fooBar.foo(printFoo);
 //        fooBar.bar(printBar);
-        HashMap hashMap = new HashMap<String,Object>();
+//        HashMap hashMap = new HashMap<String,Object>();
     }
 }
