@@ -3,19 +3,18 @@ package com.example.controller;
 import com.example.mapper.UserMapper;
 import com.example.pojo.Attribute;
 import com.example.pojo.Offering;
-import com.example.pojo.User;
 import com.example.service.AttributeService;
 import com.example.service.OfferingService;
 import com.example.vo.OfferingConvert;
 import com.example.vo.OfferingDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -31,6 +30,7 @@ public class OfferingController {
     private OfferingService offeringService;
 
     @PostMapping("/add")
+    @PreAuthorize("hasAuthority('test')")
     public int insertOffering(HttpServletRequest request, @RequestBody OfferingDto offeringDto){
 //        入参数转为数据库商品表中的
         Offering offering = OfferingConvert.Instance.abc(offeringDto);
@@ -47,6 +47,7 @@ public class OfferingController {
         return 1;
     }
     @PostMapping("/addList")
+    @PreAuthorize("hasAuthority('test')")
     public int ListOffering(){
         return 1;
     }

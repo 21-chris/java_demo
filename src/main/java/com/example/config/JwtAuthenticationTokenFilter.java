@@ -45,7 +45,6 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         }
         //从redis中获取用户信息
         String redisKey = "login:" + userid;
-
 //        LoginUser loginUser = redisCache.getCacheObject(redisKey);
         LoginUser loginUser = (LoginUser) redisTemplate.opsForValue().get(redisKey);
         System.out.println("1-----hello"+loginUser);
@@ -56,11 +55,9 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         //存入SecurityContextHolder
         //TODO 获取权限信息封装到Authentication中
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(loginUser,null,loginUser.getAuthorities());
+        new UsernamePasswordAuthenticationToken(loginUser,null,loginUser.getAuthorities());
 
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-
-
         //放行
         System.out.println("放行");
         filterChain.doFilter(request, response);

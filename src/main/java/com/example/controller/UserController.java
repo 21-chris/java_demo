@@ -22,13 +22,11 @@ public class UserController {
     public int insertUser(@RequestBody User user){
         return userService.insertUser(user);
     }
-//    @PreAuthorize("admin")
 
     @RequestMapping("/hello")
     @PreAuthorize("hasAuthority('test')")
     public String Hello(){
-        System.out.println("he;l");
-        return "heoop";
+        return "hello";
     }
     @PostMapping("/update")
     public int insert(@RequestBody User user){
