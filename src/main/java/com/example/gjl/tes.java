@@ -1,9 +1,8 @@
 package com.example.gjl;
 
-import java.util.HashMap;
-
 public class tes {
     public static void main(String[] args) throws InterruptedException {
+//        char df = '0';
 
 //        printBar printBar = new printBar();
 //        printFoo printFoo = new printFoo();
